@@ -1,6 +1,7 @@
 package com.example.basichttpserver.controller;
 
 import com.example.basichttpserver.model.Greeting;
+import com.example.basichttpserver.model.GreetingRequest;
 import com.example.basichttpserver.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +42,10 @@ public class GreetingController {
     @GetMapping("/greetings")
     public ConcurrentMap<Long, Greeting> getAllGreetings() {
         return greetingService.getAllGreetings();
+    }
+
+    @PostMapping("/greetingDT")
+    public Greeting createGreeting(@RequestBody GreetingRequest greetingRequest) {
+        return greetingService.createGreeting(greetingRequest.getName(), greetingRequest.getMessage());
     }
 }

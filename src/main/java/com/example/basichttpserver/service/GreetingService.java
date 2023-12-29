@@ -23,6 +23,13 @@ public class GreetingService {
         return greeting;
     }
 
+    public Greeting createGreeting(String name, String msg) {
+        long id = counter.incrementAndGet();
+        Greeting greeting = new Greeting(id, "Hello, " + name + "!" + " Your msg :" + msg);
+        greetings.put(id, greeting);
+        return greeting;
+    }
+
     public Greeting getGreeting(Long id) {
         return greetings.get(id);
     }

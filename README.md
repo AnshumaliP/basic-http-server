@@ -58,5 +58,14 @@ This Spring Boot application provides a simple Greeting API with the following e
 - **Usage**:
   ```bash
   curl "http://localhost:8080/greetings"
+  ```
+### 6. Testing with JSON payload
+
+```bash
+curl -X POST http://localhost:8080/greetingDT \
+-H "Content-Type: application/json" \
+-d '{"name": "John", "message": "Hello there!"}'
+```
+
 
 

@@ -1,6 +1,7 @@
 package com.example.basichttpserver.controller;
 
 import com.example.basichttpserver.model.Greeting;
+import com.example.basichttpserver.model.GreetingRequest;
 import com.example.basichttpserver.service.GreetingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -80,5 +82,23 @@ public class GreetingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Hello, TestUser!")));
+    }
+
+    @Test
+    public void testCreateGreetingDT() throws Exception {
+        GreetingRequest greetingRequest = new GreetingRequest();
+        greetingRequest.setName("John");
+        greetingRequest.setMessage("Hello there!");
+
+        Greeting expectedGreeting = new Greeting(1L, "Hello, John! Your msg: Hello there!");
+
+        given(greetingService.createGreeting(any(String.class), any(String.class)))
+                .willReturn(expectedGreeting);
+
+        mockMvc.perform(post("/greetingDT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"John\",\"message\":\"Hello there!\"}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Hello, John! Your msg: Hello there!")));
     }
 }
