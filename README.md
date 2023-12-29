@@ -1,4 +1,4 @@
-### http-server
+### basic-http-server
 Simple spring Boot http-server with Greeting API 
 
 ### Run the server via :
